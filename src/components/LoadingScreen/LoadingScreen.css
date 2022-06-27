@@ -1,0 +1,11 @@
+.loader span:first-child {
+  animation-delay: 0.5s;
+}
+
+.loader span:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+.loader span:last-child {
+  animation-delay: 0.7s;
+}
