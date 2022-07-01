@@ -23,8 +23,9 @@ export default function App() {
           <NavigationDetails />
           <Routes>
             <Route index={true} element={<HomePage />} />
-            <Route path="workspaces" element={<WorkspacesPage />}>
-              <Route path=":workspaceId" element={<WorkspacePage />}>
+            <Route path="workspaces">
+              <Route index={true} element={<WorkspacesPage />}></Route>
+              <Route path=":id" element={<WorkspacePage />}>
                 {/* <Route path=":routeName" element={} >
                   <Route path="history" element={} />
                 </Route>
