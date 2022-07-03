@@ -10,6 +10,7 @@ import NavigationDetails from "./components/Window/NavigationDetails";
 import HomePage from "./pages/Home";
 import HistoryPage from "./pages/History";
 import WorkspacesPage from "./pages/workspaces";
+import WorkspaceWrapper from "./pages/workspaces/workspace/Wrapper";
 import WorkspacePage from "./pages/workspaces/workspace";
 
 export default function App() {
@@ -25,11 +26,10 @@ export default function App() {
             <Route index={true} element={<HomePage />} />
             <Route path="workspaces">
               <Route index={true} element={<WorkspacesPage />}></Route>
-              <Route path=":id" element={<WorkspacePage />}>
-                {/* <Route path=":routeName" element={} >
-                  <Route path="history" element={} />
-                </Route>
-                <Route path="history" element={} /> */}
+              <Route path=":id" element={<WorkspaceWrapper />}>
+                <Route index={true} element={<WorkspacePage />}></Route>
+                {/* <Route path=":routeName" element={} /> */}
+                {/* <Route path="history" element={} /> */}
               </Route>
             </Route>
             <Route path="history" element={<HistoryPage />} />
