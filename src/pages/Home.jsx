@@ -15,15 +15,9 @@ export default function Home() {
   const [isModalActive, setIsModalActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // let { current: setWrokspaceNameError } = useRef(),
-  //   { current: setApiBaseURLError } = useRef(),
-  //   { current: setApiVersionError } = useRef();
-
   const [workspaceNameError, setWrokspaceNameError] = useState(null),
     [apiBaseURLError, setApiBaseURLError] = useState(null),
     [apiVersionError, setApiVersionError] = useState(null);
-
-  // let setWrokspaceNameError, setApiBaseURLError, setApiVersionError;
 
   const workspaceNameInput = useRef(),
     apiBaseURLInput = useRef(),
