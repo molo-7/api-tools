@@ -39,7 +39,7 @@ export default function Home() {
     setApiVersionError(null);
   };
 
-  const createWorkspaceHandler = () => {
+  const createWorkspaceHandler = async () => {
     let validInputs = true;
 
     const name = workspaceNameInput.current.value.trim();
@@ -65,51 +65,36 @@ export default function Home() {
 
     // create workspace
     if (validInputs) {
-      const workspace = {
+      const workspaceObj = {
         name,
         api: {
           baseURL,
           version: version || null,
         },
       };
+      setIsLoading(true);
 
-      ipcRenderer.send("createWorkspaceRequest", workspace);
-      // setIsLoading(true);
+      ipcRenderer
+        .invoke("createWorkspaceRequest", workspaceObj)
+        .then((workspace) => {
+          setIsLoading(false);
+          console.log(workspace);
+          if (workspace.notAvailable) {
+            setWrokspaceNameError(
+              <>
+                You already have a workspace named
+                <Link
+                  to={`/workspaces/${workspace._id}`}
+                  className="text-blue ml-1 underline"
+                >
+                  {workspace.name}
+                </Link>
+              </>
+            );
+          } else navigate(`/workspaces/${workspace._id}`);
+        });
     }
   };
-
-  // handle when a workspace is created
-  useEffect(() => {
-    /**
-     *
-     * @param {} e
-     * @param {object} workspaceData
-     * @param {true | undefined} workspaceData.notAvailable
-     * @param {string} workspaceData.name
-     * @param {string} workspaceData._id
-     */
-    const listener = (e, workspaceData) => {
-      const setError = setWrokspaceNameError;
-      // setIsLoading(false);
-      if (workspaceData.notAvailable) {
-        setError(
-          <>
-            You already have a workspace named
-            <Link
-              to={`/workspaces/${workspaceData._id}`}
-              className="text-blue ml-1 underline"
-            >
-              {workspaceData.name}
-            </Link>
-          </>
-        );
-      } else navigate(`/workspaces/${workspaceData._id}`);
-    };
-
-    ipcRenderer.on("workspaceCreate", listener);
-
-    return () => ipcRenderer.removeListener("workspaceCreate", listener);
-  }, []);
 
   return (
     <div>

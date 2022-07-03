@@ -51,21 +51,22 @@ ipcMain.on("restoreWindowButton", () =>
 ipcMain.on("closeWindowButton", () => app.quit());
 
 // Datastore
-ipcMain.on("createWorkspaceRequest", (e, workspaceData) => {
-  workspaceModel
-    .findOne({ name: new RegExp(`^${workspaceData.name}$`, "i") }) // case-insensitive search
-    .then((document) => {
-      if (document)
-        mainWindow.webContents.send("workspaceCreate", {
-          notAvailable: true,
-          ...document,
-        });
-      else return workspaceModel.create(workspaceData);
-    })
-    .then((document) =>
-      mainWindow.webContents.send("workspaceCreate", document)
-    )
-    .catch(console.error);
+ipcMain.handle("createWorkspaceRequest", async (event, data) => {
+  try {
+    const workspaceDoc = await workspaceModel.findOne({
+      name: new RegExp(`^${data.name}$`, "i"),
+    }); // case-insensitive search
+
+    if (workspaceDoc)
+      return {
+        notAvailable: true,
+        ...workspaceDoc,
+      };
+
+    return await workspaceModel.create(data);
+  } catch (error) {
+    console.error(console.error);
+  }
 });
 
 ipcMain.handle("getWorkspaceRequest", async (event, id) => {
