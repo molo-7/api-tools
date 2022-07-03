@@ -67,3 +67,12 @@ ipcMain.on("createWorkspaceRequest", (e, workspaceData) => {
     )
     .catch(console.error);
 });
+
+ipcMain.handle("getWorkspaceRequest", async (event, id) => {
+  try {
+    const workspace = await workspaceModel.getById(id);
+    return workspace;
+  } catch (error) {
+    console.error(error);
+  }
+});
