@@ -33,8 +33,10 @@ const schema = {
     about: {
       type: "string",
     },
-    lastModified: {
+    lastVisited: {
       type: "number",
+      nullable: true,
+      default: null,
     },
   },
   required: ["name", "api"],
