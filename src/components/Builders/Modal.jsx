@@ -24,7 +24,7 @@ export default function Modal({ title, closeModalHandler, children }) {
       className="flex justify-center items-center fixed w-full h-full left-0 top-0 bg-[#00000091] z-30"
     >
       <div
-        className="bg-dark rounded-lg relative w-4/5 h-[85%] p-4 pb-0 shadow-lg"
+        className="bg-[#181818] rounded-lg relative w-4/5 h-[85%] p-4 pb-0 shadow-lg"
         ref={modalEle}
       >
         {/* Close Modal Button */}
